@@ -1,0 +1,3 @@
+insert into Igreja (cnpj, nome_fantasia, razao_social, tipo, data_fundacao) values ('70.311.193/0001-87', 'Betfagé', 'IEADERN - Ass. Deus Betfagé', 'MATRIZ', '2009-03-02');
+insert into Igreja (cnpj, nome_fantasia, razao_social, tipo, data_fundacao) values ('52.822.994/0001-25', 'Manancial', 'IEADERN - Ass. Deus Manacial de Bençãos', 'FILIAL', '1997-12-10');
+insert into AdmUsuario (nome, nomeUser, senhaUser, criacao) values ('Administrador','admin', 'admin','2015-09-10');

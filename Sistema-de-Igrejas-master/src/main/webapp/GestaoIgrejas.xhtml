@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<ui:composition template="/WEB-INF/templates/Layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<f:viewAction action="#{gestaoIgrejasBean.consultar}" />
+		</f:metadata>
+
+		<h1>Cadastro de Igrejas</h1>
+
+		<h:form id="frm">
+
+			<p:growl id="growl" life="5000" />
+			<!-- BARRA DE NAVEGAÇAO DO CADASTRO DE IGREJAS -->
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton type="button" value="Novo" icon="ui-icon-document"
+						onclick="PF('edicaoIgrejaDialog').show()" />
+
+					<span class="ui-separator"> <span
+						class="ui-icon ui-icon-grip-dotted-vertical" />
+					</span>
+
+					<p:commandButton type="button" title="Alterar" icon="ui-icon-disk" />
+					<p:commandButton type="button" title="Deletar" icon="ui-icon-trash" />
+					<p:commandButton type="button" title="Imprimir"
+						icon="ui-icon-print" />
+				</f:facet>
+
+				<f:facet name="right">
+					<!-- 					<p:menuButton value="Options"> -->
+					<!-- 						<p:menuitem value="Save" actionListener="#{toolbarView.save}" -->
+					<!-- 							update="messages" icon="ui-icon-disk" /> -->
+					<!-- 						<p:menuitem value="Update" actionListener="#{toolbarView.update}" -->
+					<!-- 							update="messages" icon="ui-icon-arrowrefresh-1-w" /> -->
+					<!-- 						<p:menuitem value="Delete" actionListener="#{toolbarView.delete}" -->
+					<!-- 							ajax="false" icon="ui-icon-close" /> -->
+					<!-- 						<p:menuitem value="Homepage" url="http://www.primefaces.org" -->
+					<!-- 							icon="ui-icon-extlink" /> -->
+					<!-- 					</p:menuButton> -->
+				</f:facet>
+			</p:toolbar>
+
+			<!-- LISTA DAS IGREJAS -->
+			<p:dataTable value="#{gestaoIgrejasBean.todasIgrejas}" var="igreja"
+				emptyMessage="Nenhuma Igreja Cadastrada." rows="10" paginator="true"
+				paginatorPosition="bottom">
+
+				<p:column headerText="Foto" width="48">
+					<p:graphicImage library="mvsistemas/img" name="ieadern.jpg"
+						style="width: 48px; height:48px" />
+				</p:column>
+				<!-- border-radius: 100px;  -->
+				<p:column headerText="Razão social" sortBy="#{igreja.razaoSocial}" width="712">
+					<h:outputText value="#{igreja.razaoSocial}" />
+				</p:column>
+				<p:column headerText="Nome fantasia" sortBy="#{igreja.nomeFantasia}">
+					<h:outputText value="#{igreja.nomeFantasia}" />
+				</p:column>
+				<p:column headerText="Congregação" sortBy="#{igreja.tipo}">
+					<h:outputText value="#{igreja.tipo}" />
+				</p:column>
+				<p:column headerText="CNPJ" sortBy="#{igreja.cnpj}">
+					<h:outputText value="#{igreja.cnpj}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:dialog id="dialog" widgetVar="edicaoIgrejaDialog"
+				header="Nova Igreja" resizable="false" modal="true">
+				<p:panelGrid id="painelIgreja" columns="2">
+					<p:outputLabel value="Nome da Congregação" for="nome-congregacao" />
+					<p:inputText id="nome-congregacao" size="60" maxlength="80" />
+
+					<p:outputLabel value="Razão Social" for="razao-social" />
+					<p:inputText id="razao-social" size="80" maxlength="120" />
+
+					<p:outputLabel value="CNPJ" for="cnpj" />
+					<p:inputText id="cnpj" size="18" maxlength="18" />
+
+					<p:outputLabel value="Data de Fundação" for="data-fundacao" />
+					<p:inputText id="data-fundacao" size="10" maxlength="10" />
+
+					<p:outputLabel value="Tipo" for="tipo-congregacao" />
+					<p:selectOneMenu id="tipo-congregacao">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems></f:selectItems>
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Endereço" for="endereco" />
+					<p:inputText id="endereco" size="80" maxlength="120" />
+
+					<p:outputLabel value="Bairro" for="bairro" />
+					<p:inputText id="bairro" size="10" maxlength="10" />
+
+					<p:outputLabel value="Numero" for="numero" />
+					<p:inputText id="numero" size="10" maxlength="10" />
+
+					<p:outputLabel value="Cidade" for="cidade" />
+					<p:inputText id="cidade" size="10" maxlength="10" />
+
+					<p:outputLabel value="UF" for="uf" />
+					<p:inputText id="uf" size="2" maxlength="2" />
+
+					<p:outputLabel value="Cep" for="cep" />
+					<p:inputText id="cep" size="8" maxlength="8" />
+
+					<p:outputLabel value="E-mail" for="email" />
+					<p:inputText id="email" size="10" maxlength="10" />
+
+				</p:panelGrid>
+			</p:dialog>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
