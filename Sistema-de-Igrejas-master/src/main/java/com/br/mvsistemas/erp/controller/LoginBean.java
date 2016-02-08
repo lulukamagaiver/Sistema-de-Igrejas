@@ -30,10 +30,7 @@ public class LoginBean implements Serializable {
 	
 	@Inject
 	private AdmUsuarios admUsuarios;
-	
-	@Inject
-	private Usuario usuario;
-	
+		
 	@Inject
 	private ControleAcesso acesso;
 	
@@ -49,46 +46,31 @@ public class LoginBean implements Serializable {
 		
 		listaUsuarios = admUsuarios.todas();
 		
-		for (AdmUsuario admUsuario : listaUsuarios) {
-			this.admUsuario.setNome(admUsuario.getNome());
-			this.admUsuario.setNomeUser(admUsuario.getNomeUser());
-			this.admUsuario.setSenhaUser(admUsuario.getSenhaUser());
-		}
-
-//		if ("admin".equals(this.nomeUsuario) && "admin".equals(this.senha)) {
-//			this.usuario.setNome(this.nomeUsuario);
-//			this.usuario.setDataLogin(new Date());
-//
-//			msg.info("Usuario Logado!");
-//
-//			return "GestaoIgrejas?faces-redirect=true";
-//			
-//			
-//		} else {
-//
-//			msg.error("Usuario e/ou Senha Invalidos");
-//			
-//		}
-//
-//		return null;
 		if (listaUsuarios == null) {
 			msg.error("Não Há Usuarios Cadastrados");
 		} else {
-			if (admUsuario.getNomeUser().equals(this.nomeUsuario) && admUsuario.getSenhaUser().equals(this.senha)) {
-				this.usuario.setNome(this.nomeUsuario);
+			for (AdmUsuario admUsuario : listaUsuarios) {
+				this.admUsuario.setNome(admUsuario.getNome());
+				this.admUsuario.setNomeUser(admUsuario.getNomeUser());
+				this.admUsuario.setSenhaUser(admUsuario.getSenhaUser());
 				
-				acesso.setDataLogin(new Date());
-				acesso.setUsuario(admUsuario);
-				
-				salvaAcesso.guardar(acesso);
-				
-				msg.info("Usuario Logado!");
-				
-				return "GestaoIgrejas?faces-redirect=true";
-				
-			} else {
-				msg.error("Usuario e/ou Senha Invalidos");
+				if (this.admUsuario.getNomeUser().equals(this.nomeUsuario) && this.admUsuario.getSenhaUser().equals(this.senha)) {
+					//this.usuario.setNome(this.nomeUsuario);
+					
+					acesso.setDataLogin(new Date());
+					acesso.setUsuario(admUsuario);
+					
+					salvaAcesso.guardar(acesso);
+					
+					msg.info("Usuario Logado!");
+					
+					return "GestaoIgrejas?faces-redirect=true";
+					
+				} else {
+					msg.error("Usuario e/ou Senha Invalidos");
+				}
 			}
+				
 		}
 		
 		return null;

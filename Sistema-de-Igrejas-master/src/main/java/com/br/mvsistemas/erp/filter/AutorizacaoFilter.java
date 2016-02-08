@@ -13,13 +13,14 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.br.mvsistemas.erp.model.AdmUsuario;
 import com.br.mvsistemas.erp.model.Usuario;
 
 @WebFilter("*.xhtml")
 public class AutorizacaoFilter implements Filter{
 	
 	@Inject
-	private Usuario usuario;
+	private AdmUsuario admUsuario;
 
 	@Override
 	public void destroy() {
@@ -33,7 +34,7 @@ public class AutorizacaoFilter implements Filter{
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpServletRequest request = (HttpServletRequest) req;
 		
-		if (!usuario.isLogado()
+		if (!admUsuario.isLogado()
 		&& !request.getRequestURI().endsWith("/Login.xhtml")
 		&& !request.getRequestURI()
 		.contains("/javax.faces.resource/")) {

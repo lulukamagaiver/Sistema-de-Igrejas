@@ -3,6 +3,8 @@ package com.br.mvsistemas.erp.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@Named
+@SessionScoped
 public class AdmUsuario implements Serializable{
 
 	
@@ -32,6 +36,10 @@ public class AdmUsuario implements Serializable{
 	
 	@Temporal(TemporalType.DATE)
 	private Date criacao;
+	
+	public Boolean isLogado(){
+		return nomeUser != null;
+	}
 
 	/**
 	 * @return the id_admUsuario
