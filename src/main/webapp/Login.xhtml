@@ -8,7 +8,7 @@
 
 	<ui:define name="corpo">
 		<f:metadata>
-			<f:viewAction action="#{admUsuariosBean.consultar}" />
+			<f:viewAction action="#{loginBean.consultar}" />
 		</f:metadata>
 		<div id="login-dialog">
 			<h:outputStylesheet library="mvsistemas" name="estilo.css" />
@@ -18,9 +18,9 @@
 				<h:panelGrid columns="2" styleClass="grid-login">
 					<p:outputLabel value="Usuário" for="usuario" />
 					<p:inputText id="usuario" size="20"
-						value="#{loginBean.nomeUsuario}" />
+						value="#{loginBean.usuario.nome}" />
 					<p:outputLabel value="Senha" for="senha" />
-					<p:password id="senha" size="20" value="#{loginBean.senha}" />
+					<p:password id="senha" size="20" value="#{loginBean.usuario.senha}" />
 					<p:outputLabel />
 					<p:commandButton value="Acessar" action="#{loginBean.login}" update="growl :frm:growl" />
 				</h:panelGrid>

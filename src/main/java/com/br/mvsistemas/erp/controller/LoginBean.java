@@ -1,16 +1,20 @@
 package com.br.mvsistemas.erp.controller;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.br.mvsistemas.erp.model.AdmUsuario;
+import org.apache.commons.lang3.StringUtils;
+
 import com.br.mvsistemas.erp.model.Usuario;
-import com.br.mvsistemas.erp.repository.AdmUsuarios;
+import com.br.mvsistemas.erp.repository.Usuarios;
 import com.br.mvsistemas.erp.util.FacesMessages;
 
 @Named
@@ -20,28 +24,35 @@ public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
+	private Usuarios usuarios;
+	
+	@Inject
 	private Usuario usuario;
-
-	private String nomeUsuario;
-
-	private String senha;
+	
+	private List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+	
+	public void consultar() {
+		listaUsuarios = usuarios.todas();
+	}
 
 	public String login() {
 		FacesMessages msg = new FacesMessages();
-
-		if ("admin".equals(this.nomeUsuario) && "admin".equals(this.senha)) {
-			this.usuario.setNome(this.nomeUsuario);
-			this.usuario.setDataLogin(new Date());
-
-			msg.info("Usuario Logado!");
-
-			return "GestaoIgrejas?faces-redirect=true";
-			
-			
-		} else {
-
-			msg.error("Usuario e/ou Senha Invalidos");
-			
+		consultar();
+		if (listaUsuarios.size() > 0) {			
+			if (StringUtils.isEmpty(this.usuario.getNome()) && StringUtils.isEmpty(this.usuario.getSenha())) {
+				msg.error("Informe Usuario e/ou Senha para Logar.");
+			}else{
+				for (Usuario usuario : listaUsuarios) {
+					if (usuario.getNome().equals(this.usuario.getNome()) && usuario.getSenha().equals(this.usuario.getSenha())) {
+						this.usuario.setNome(usuario.getNome());
+						msg.info("Usuario Logado!");
+						return "GestaoIgrejas?faces-redirect=true";
+					}
+				}
+				msg.error("Usuario e/ou Senha Invalidos");
+			}
+		}else{
+			msg.error("Nenhum Usuario cadastrado no Banco.");
 		}
 
 		return null;
@@ -51,21 +62,21 @@ public class LoginBean implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		return "/Login?faces-redirect=true";
 	}
-
-	public String getNomeUsuario() {
-		return nomeUsuario;
+	
+	public int getAnoAtual() {
+		Calendar cal = GregorianCalendar.getInstance();
+		return cal.get(Calendar.YEAR);
 	}
 
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
+	public List<Usuario> getListaUsuarios() {
+		return listaUsuarios;
 	}
 
-	public String getSenha() {
-		return senha;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
-
 }

@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.Ostermiller.util.Base64;
+
 @Entity
 @Named
 @SessionScoped
@@ -28,8 +30,11 @@ public class Usuario implements Serializable{
 	@Column(nullable = false, length = 80)
 	private String nome;
 	
+	@Column(nullable = false)
+	private String senha;
+	
 	@Temporal(TemporalType.DATE)
-	private Date dataLogin;
+	private Date dataCadastro;
 	
 	public Boolean isLogado(){
 		return nome != null;
@@ -50,13 +55,21 @@ public class Usuario implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Date getDataLogin() {
-		return dataLogin;
+	
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setDataLogin(Date dataLogin) {
-		this.dataLogin = dataLogin;
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 	@Override
